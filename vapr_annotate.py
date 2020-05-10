@@ -58,21 +58,18 @@ annotator = vapr_core.VaprAnnotator(input_dir=vcf_dir,
 									    vcfs_gzipped=gzipped,
 									    annovar_install_path=annovar_path)
 
-# # VAPr annotate
-# dataset = annotator.annotate(num_processes=threads)
+# VAPr annotate
+dataset = annotator.annotate(num_processes=threads)
 ds = create_whole_dataset_list(mongodb_name, collection_name)
-# client = MongoClient()
-# db = getattr(client, mongodb_name)
-# collection = getattr(db, collection_name)
-# filtered = collection.find({ "func_knowngene": { "$in": ["exonic"] }})
-# ds = list(filtered)
 
 # # Convert and write to MAF format
-ds2 = [{k:v for k,v in anno.items() if not re.match('clinvar|civic|dbnsfp|cadd', k)} for anno in ds]
 maf = maf_formatter(ds2)
-maf2=maf[maf.columns.drop(list(maf.filter(regex='clinvar|civic|dbnsfp|cadd.')))]
-maf2.to_csv(os.path.join(output_dir, output_maf), index=False, sep="\t", chunks=10000)
+maf.to_csv(os.path.join(output_dir, output_maf), index=False, sep="\t", chunks=10000)
 
-# if remove_collection:
-# 	collection.remove()
+if remove_collection:
+	client = MongoClient()
+	db = getattr(client, mongodb_name)
+	collection = getattr(db, collection_name)
+	collection.remove()
+
 
