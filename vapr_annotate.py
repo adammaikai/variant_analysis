@@ -21,15 +21,38 @@ def str2bool(v):
         raise argparse.ArgumentTypeError('Boolean value expected.')
 
 parser = argparse.ArgumentParser(description='Annotate VCF file/s with VAPr and output as MAF file.')
-parser.add_argument('--vcf_dir', required=True, help='Directory where VCF files live.')
-parser.add_argument('--output_dir', required=True, help='Output directory.')
-parser.add_argument('--output_maf', required=True, help='Output MAF name (file name only.')
-parser.add_argument('--mongodb_name', required=True, help='MongoDB name. Suggested: PI name.')
-parser.add_argument('--collection_name', required=True, help='MongoDB collection name. May be date, version, or experiment name.')
-parser.add_argument('--annovar_path', required=True, help='Path to Annovar installation.')
-parser.add_argument('--remove_collection', type=str2bool, nargs='?', const=True, default=False, help='Must be one of True/False. If True, remove MongoDB collection after printing MAF file.')
-parser.add_argument('--gzipped', type=str2bool, nargs='?', const=True, default=False, help='Must be one of True/False. Are VCF files gzipped?')
-parser.add_argument('--threads', default=1, help='Number of threads to parallelize annotation.')
+parser.add_argument('--vcf_dir',
+	required=True,
+	help='Directory where VCF files live.')
+parser.add_argument('--output_dir',
+	required=True,
+	help='Output directory.')
+parser.add_argument('--output_maf',
+	required=True,
+	help='Output MAF name (file name only.')
+parser.add_argument('--mongodb_name',
+	required=True,
+	help='MongoDB name. Suggested: PI name.')
+parser.add_argument('--collection_name',
+	required=True,
+	help='MongoDB collection name. May be date, version, or experiment name.')
+parser.add_argument('--annovar_path',
+	required=True,
+	help='Path to Annovar installation.')
+parser.add_argument('--remove_collection',
+	type=str2bool,
+	nargs='?',
+	const=True,
+	default=False,
+	help='Must be one of True/False. If True, remove MongoDB collection after printing MAF file.')
+parser.add_argument('--gzipped',
+	type=str2bool, nargs='?',
+	const=True,
+	default=False,
+	help='Must be one of True/False. Are VCF files gzipped?')
+parser.add_argument('--threads',
+	default=1,
+	help='Number of threads to parallelize annotation.')
 
 
 # command line arguments
@@ -51,12 +74,12 @@ threads = int(args.threads)
 
 # Instantiate VapAnnotator Object
 annotator = vapr_core.VaprAnnotator(input_dir=vcf_dir,
-										output_dir=output_dir,
-										mongo_db_name=mongodb_name,
-									    mongo_collection_name=collection_name,
-									    build_ver='hg19',
-									    vcfs_gzipped=gzipped,
-									    annovar_install_path=annovar_path)
+									output_dir=output_dir,
+									mongo_db_name=mongodb_name,
+								    mongo_collection_name=collection_name,
+								    build_ver='hg19',
+								    vcfs_gzipped=gzipped,
+								    annovar_install_path=annovar_path)
 
 # VAPr annotate
 dataset = annotator.annotate(num_processes=threads)
