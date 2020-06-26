@@ -39,18 +39,17 @@ parser.add_argument('--collection_name',
 parser.add_argument('--annovar_path',
 	required=True,
 	help='Path to Annovar installation.')
-parser.add_argument('--gzipped',
-	type=str2bool, nargs='?',
-	const=True,
-	default=False,
-	required=True,
-	help='Must be one of True/False. Are VCF files gzipped?')
 parser.add_argument('--remove_collection',
 	type=str2bool,
 	nargs='?',
 	const=True,
 	default=False,
 	help='Must be one of True/False. If True, remove MongoDB collection after printing MAF file.')
+parser.add_argument('--gzipped',
+	type=str2bool, nargs='?',
+	const=True,
+	default=False,
+	help='Must be one of True/False. Are VCF files gzipped?')
 parser.add_argument('--threads',
 	default=1,
 	help='Number of threads to parallelize annotation.')

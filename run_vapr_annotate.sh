@@ -3,12 +3,12 @@
 # Run VAPr to annotate and output MAF
 
 python3 vapr_annotate.py \
-	--vcf_dir vcf_dir \
-	--output_dir output_dir \
-	--output_maf maf \
-	--mongodb_name my_mongodb \
-	--collection_name collection1 \
-	--annovar_path /path/to/annovar \
+	--vcf_dir /mnt/data1/adam/jamieson/jane/apobec_dna/vcf/vapr_test \
+	--output_dir /mnt/data1/adam/jamieson/jane/apobec_dna/maf/vapr_test_out \
+	--output_maf Isquith_vapr_test.maf \
+	--mongodb_name Isquith \
+	--collection_name test \
+	--annovar_path /mnt/data1/adam/software/annovar \
 	--remove_collection False \
 	--gzipped False \
-	--threads n_threads
+	--threads 12
